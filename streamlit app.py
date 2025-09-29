@@ -1,5 +1,6 @@
+# app.py
 import streamlit as st
-import fitz  # PyMuPDF for PDF text extraction
+import fitz  # PyMuPDF
 from langchain.prompts import PromptTemplate
 from langchain_groq import ChatGroq
 
@@ -8,8 +9,8 @@ from langchain_groq import ChatGroq
 # =====================
 st.set_page_config(page_title="Academic Paper Summarizer", page_icon="📑", layout="wide")
 
-# 🔑 Replace with your Groq API Key
-GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+# 🔑 Load Groq API key from Streamlit secrets
+GROQ_API_KEY = st.secrets["groq"]["api_key"]
 
 # =====================
 # HELPER FUNCTIONS
@@ -24,9 +25,12 @@ def extract_text_from_pdf(pdf_file):
 
 
 def generate_summary(text, focus):
-    """Generate a summary using Groq LLM"""
-    llm = ChatGroq(groq_api_key=GROQ_API_KEY, model_name="llama-3.3-70b-versatile")  # You can try other models
-    
+    """Generate a summary using Groq LLM with chunking"""
+    llm = ChatGroq(
+        groq_api_key=GROQ_API_KEY,
+        model_name="llama-3.3-70b-versatile"
+    )
+
     template = """
     You are an AI academic assistant. Summarize the following research paper text.
     Focus specifically on: {focus}.
@@ -36,16 +40,28 @@ def generate_summary(text, focus):
     Research Paper Text:
     {paper_text}
     """
-    
+
     prompt = PromptTemplate(input_variables=["focus", "paper_text"], template=template)
-    final_prompt = prompt.format(focus=focus, paper_text=text[:6000])  # keep within token limit
-    response = llm.invoke(final_prompt)
-    return response.content
+
+    # Split text into chunks to avoid token overflow
+    max_chars = 4000
+    chunks = [text[i:i+max_chars] for i in range(0, len(text), max_chars)]
+
+    summary = ""
+    for chunk in chunks:
+        final_prompt = prompt.format(focus=focus, paper_text=chunk)
+        response = llm.invoke(final_prompt)
+        summary += response.content + "\n\n"
+
+    return summary
 
 
 def answer_question(text, question):
-    """Answer user question from the paper using Groq LLM"""
-    llm = ChatGroq(groq_api_key=GROQ_API_KEY, model_name="llama-3.3-70b-versatile")
+    """Answer user question from the paper using Groq LLM with chunking"""
+    llm = ChatGroq(
+        groq_api_key=GROQ_API_KEY,
+        model_name="llama-3.3-70b-versatile"
+    )
 
     template = """
     You are an academic research assistant. Based only on the provided research paper text, 
@@ -56,9 +72,17 @@ def answer_question(text, question):
     """
 
     prompt = PromptTemplate(input_variables=["question", "paper_text"], template=template)
-    final_prompt = prompt.format(question=question, paper_text=text[:6000])
-    response = llm.invoke(final_prompt)
-    return response.content
+
+    max_chars = 4000
+    chunks = [text[i:i+max_chars] for i in range(0, len(text), max_chars)]
+
+    answer = ""
+    for chunk in chunks:
+        final_prompt = prompt.format(question=question, paper_text=chunk)
+        response = llm.invoke(final_prompt)
+        answer += response.content + "\n\n"
+
+    return answer
 
 
 # =====================

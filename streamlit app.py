@@ -22,10 +22,11 @@ def extract_text_from_pdf(pdf_file):
 def generate_summary(text, focus):
     llm = ChatGroq(groq_api_key=GROQ_API_KEY, model_name="llama-3.3-70b-versatile")
     template = """
-    You are an AI academic assistant. Summarize the following research paper text.
+    You are an top researcher who is  Summarize the following research paper text.
     Focus specifically on: {focus}.
     Extract key insights clearly and concisely. 
-    Avoid generic statements; emphasize methodology, results, and limitations if available.
+    Avoid generic statements; emphasize methodology, results, and limitations
+    if available give per page short summary and do best to give best possible insghts that user should know.
 
     Research Paper Text:
     {paper_text}

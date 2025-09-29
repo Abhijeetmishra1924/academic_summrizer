@@ -9,7 +9,7 @@ from langchain_groq import ChatGroq
 st.set_page_config(page_title="Academic Paper Summarizer", page_icon="📑", layout="wide")
 
 # 🔑 Replace with your Groq API Key
-GROQ_API_KEY = "GROQ_API_KEY"
+GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 
 # =====================
 # HELPER FUNCTIONS

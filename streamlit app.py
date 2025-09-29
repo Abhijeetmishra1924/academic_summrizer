@@ -10,7 +10,7 @@ from langchain_groq import ChatGroq
 st.set_page_config(page_title="Academic Paper Summarizer", page_icon="📑", layout="wide")
 
 # 🔑 Load Groq API key from Streamlit secrets
-GROQ_API_KEY = st.secrets["api_key"]
+GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 
 # =====================
 # HELPER FUNCTIONS

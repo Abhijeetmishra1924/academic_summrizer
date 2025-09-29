@@ -1,11 +1,25 @@
-# vidurbot
-Vidur Bot is an AI-powered Indian legal assistant using Flask, LangChain, and Groq’s LLaMA3. Supports multi-language queries, PDF legal doc analysis, YouTube video links, and RAG via ChromaDB. Built for smart legal help using powerful LLMs and ngrok for easy access
-flask
-flask-cors
-langchain
-langchain-groq
-chromadb
-pypdf2
-sentence-transformers
-requests
-gunicorn
+# Academic Paper Summarizer
+
+A Streamlit web app that extracts text from research paper PDFs and generates summaries, Q&A, and insights using Groq LLM.
+
+Features
+
+✅ Upload PDF research papers.
+
+✅ Extract text from PDFs using PyMuPDF.
+
+✅ Generate summaries focused on:
+
+General Overview
+
+Methodology
+
+Results & Findings
+
+Key Takeaways
+
+Limitations & Future Work
+
+✅ Ask detailed questions about the paper with references to sections.
+
+✅ Powered by Groq LLM for accurate academic understanding.

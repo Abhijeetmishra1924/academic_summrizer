@@ -26,7 +26,7 @@ def generate_summary(text, focus):
     Focus specifically on: {focus}.
     Extract key insights clearly and concisely. 
     Avoid generic statements; emphasize methodology, results, and limitations
-    if available give per page present in  uploded document short summary and do best to give best possible insghts that user should know give more knowledge user should know.
+    if available , summary and do best to give best possible insghts that user should know give more knowledge user should know.
 
     Research Paper Text:
     {paper_text}

@@ -11,7 +11,7 @@ import io
 # PAGE CONFIG 
 # =====================
 st.set_page_config(
-    page_title="PaperLens Pro · Academic Summarizer",
+    page_title="PaperLens  · Academic Summarizer",
     page_icon="🔬",
     layout="wide",
     initial_sidebar_state="expanded"
